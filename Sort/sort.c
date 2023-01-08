@@ -7,6 +7,7 @@ size_t* parseList(char* direction, size_t fixedSize);
 size_t getFirstElement(char* row);
 
 void bubbleSort(size_t* array, size_t length, int ascending);
+void insertionSort(size_t* array, size_t length, int ascending);
 
 
 int main() {
@@ -15,11 +16,10 @@ int main() {
     size_t length = 10000;
 
     // TODO: We might give the length of the array in any part of the list
-    arr = parseList("./list.csv", length); /* The array is obtained from a .csv */
+    arr = parseList("list.csv", length); /* The array is obtained from a .csv */
 
-
-    // It just works!
-    bubbleSort(arr, length, 0);
+    // Nice :)
+    insertionSort(arr, length, 1);
 
     for (size_t i = 0; i < length; i++) {
         printf("%li, ", arr[i]);
@@ -113,13 +113,13 @@ size_t getFirstElement(char* row){
 
 
 void bubbleSort(size_t* array, size_t length, int ascending){
-    /*
-        !Warning: This function modifies the received array
-    */
+
+   if (length < 2 || ascending < 0 || ascending > 1) { return; }
 
 
    int isSorted = 1;
    size_t iterations = 1;
+   
    
    while(1) {
     if (iterations >= (length * length)) {
@@ -146,3 +146,37 @@ void bubbleSort(size_t* array, size_t length, int ascending){
    }
 
 }
+
+void insertionSort(size_t* array, size_t length, int ascending) {
+    if (length < 2 || ascending < 0 || ascending > 1) { return; }
+    
+    int isSorted = 1;
+    size_t iterations = 1;
+
+    while (1) {
+        if (iterations >= length * length) {
+            printf("The INSERTION SORT function reached an iteration overflow!\n");
+            return;
+        }
+
+        for (size_t i = 1; i < length; i++) {
+            
+            if ((array[i] < array[i-1] && ascending == 1) ||
+                (array[i] > array[i-1] && ascending == 0)) {
+
+                size_t temp = array[i];
+
+                array[i] = array[i-1];
+                array[i-1] = temp;
+
+                isSorted = 0;
+            }
+
+            iterations ++;
+        }
+        
+        if (isSorted == 1) { break; }
+        isSorted = 0;
+    }
+}
+
