@@ -1,9 +1,9 @@
 
 
-
+/* Main it's here just for tests  */
 function main(arr) {
-
-  bubbleSort(arr, false);
+  
+  insertionSort(arr, true);
 
   for (x of arr) {
     console.log(x);
@@ -11,7 +11,7 @@ function main(arr) {
 }
 
 function bubbleSort(array, ascending) {
-  if (typeof(array) != "object" || typeof(ascending) != "boolean") { 
+  if (typeof(array) != "object" || typeof(ascending) != "boolean" || array.length < 2) { 
     console.warn("Wrong type of argument(s)!");
     return; 
   }
@@ -39,7 +39,37 @@ function bubbleSort(array, ascending) {
   }
 }
 
+function insertionSort(array, ascending) {
+  if (typeof(array) != "object" || typeof(ascending) != "boolean" || array.length < 2) { 
+    console.warn("Wrong type of argument(s)!");
+    return; 
+  }
 
+  let iterations = 1;
+  let sorted = true;
+
+  while(1) {
+    if (iterations >= array.length * array.length) {
+      console.error("Iterations overflow on insertion sort algorithm");
+      return;
+    }
+    for (let i = 1; i < array.length; i++) {
+      if ((array[i] < array[i-1] && ascending) ||
+          (array[i] > array[i-1] && !ascending)) {
+
+        [array[i], array[i-1]] = [array[i-1], array[i]];
+        sorted = false;
+      }
+    }
+
+    if (sorted) { return array; }
+    sorted = true;
+  }
+}
+
+
+
+/* Read the .json and pass the list to main */
 const fs = require('fs');
 
 fs.readFile('list.json', (err, data) => {
