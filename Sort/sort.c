@@ -179,4 +179,3 @@ void insertionSort(size_t* array, size_t length, int ascending) {
         isSorted = 0;
     }
 }
-
